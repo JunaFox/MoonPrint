@@ -22,7 +22,7 @@ public:
      * @param G-code line.
      * @return Position and temperature.
      */
-    GcodeCommand getData(String &Gcode);
+    GcodeCommand getData(String Gcode);
 
 private:
     GcodeCommand gcC;
