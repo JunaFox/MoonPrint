@@ -10,19 +10,21 @@ void MoonPrint::setup() {
  */
 
 void MoonPrint::run() {
-    if(gcC.x == newGcC.x && gcC.y == newGcC.y && gcC.z == newGcC.z && gcC.e == newGcC.e &&
+    hotEnd.update();
+    hotEnd.setTemperature(100);
+    // if no next line is available
+    /*if(gcC.x == newGcC.x && gcC.y == newGcC.y && gcC.z == newGcC.z && gcC.e == newGcC.e &&
        gcC.temp == newGcC.temp) {
-
+            // if data is waiting
             if (Serial.available()) {
+                // store a bite of data
                 Gcode += char(Serial.read());
+                // if all data got stored
                 if (Gcode.indexOf('\n') != -1) {
                     newGcC = gc.getData(Gcode);
-                    Serial.println(String(newGcC.x) + " | " + String(newGcC.y));
-                    Serial.println(Gcode);
                     Gcode = "";
                 }
-                /*Serial.println("X: " + String(gcC.x) + " Y: " + String(gcC.y) + " Z: " + String(gcC.z) +
-                                  " E: " + String(gcC.e) + "Temp" + String(gcC.temp));*/
+
             } else if (millis() - timeLastSend >= 2000) {
                 Serial.println("OK");
                 timeLastSend = millis();
@@ -52,5 +54,5 @@ void MoonPrint::run() {
         y.goToPos(gcC.y, maxMove / distanceY * 5000);
         z.goToPos(gcC.z, maxMove / distanceZ * 5000);
         e.goToPos(gcC.e, maxMove / distanceE * 5000);
-    }
+    }*/
 }

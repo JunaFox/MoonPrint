@@ -58,8 +58,14 @@
 //NTC Pin
 #define NTC_PIN 8
 #define RESISTOR 4700
+
+//Hot end
 #define HOT_END_PIN 2
 #define FAN_PIN 3
+#define DKp 18
+#define DKi 0.2
+#define DKd 40
+#define Bias 100
 
 
 #define ABSZERO 273.15
