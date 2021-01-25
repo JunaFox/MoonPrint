@@ -6,7 +6,7 @@ Gcode::Gcode() {
 
 GcodeCommand Gcode::getData(String &Gcode) {
 
-    // G1   X123.123 Y134.132 Z123.163 E123.183
+    // G1   X123.123 Y134.132 Z123.163 E000.000
     if(Gcode.substring(0,4) == "G1  ") {
         gcC.x = Gcode.substring(6, 12).toFloat();
         gcC.y = Gcode.substring(15, 21).toFloat();

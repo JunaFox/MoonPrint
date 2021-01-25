@@ -9,7 +9,7 @@
 class Axis {
 
 public:
-    Axis(short int stepPin, short int dirPin, short int enablePin, short int minPin, short int maxPin, float stepsPerMm);
+    Axis(short int stepPin, short int dirPin, short int enablePin, short int minPin, short int maxPin, float stepsPerMm, bool direction);
 
     /**
      * Set values for G-code execution.
@@ -37,6 +37,7 @@ private:
     unsigned int isPos = 0, solPos = 0;
     float stepSpeed = 5000;
     unsigned long int timeLastStep = 0;
+    bool direction;
 
     // Needed steps per mm
     const float stepsPerMm;

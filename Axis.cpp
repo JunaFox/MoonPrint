@@ -1,6 +1,6 @@
 #include "Axis.h"
 
-Axis::Axis(short stepPin, short dirPin, short enablePin, short minPin, short maxPin, float stepsPerMm)
+Axis::Axis(short stepPin, short dirPin, short enablePin, short minPin, short maxPin, float stepsPerMm, bool direction)
            : stepPin(stepPin), dirPin(dirPin), enablePin(enablePin), minPin(minPin),
              maxPin(maxPin), stepsPerMm(stepsPerMm) {
 
@@ -8,6 +8,8 @@ Axis::Axis(short stepPin, short dirPin, short enablePin, short minPin, short max
     pinMode(stepPin, OUTPUT);
     pinMode(dirPin, OUTPUT);
     pinMode(enablePin, OUTPUT);
+
+    this->direction = direction;
 }
 
 void Axis::goToPos(float pos, float speed) {
@@ -19,7 +21,7 @@ bool Axis::move() {
     // step when last step is done
     if(micros() - timeLastStep >= stepSpeed) {
         if (solPos > isPos) {
-            digitalWrite(dirPin, HIGH);
+            digitalWrite(dirPin, direction);
 
             // do a step
             digitalWrite(stepPin, HIGH);
@@ -27,7 +29,7 @@ bool Axis::move() {
 
             ++isPos;
         } else if (solPos < isPos) {
-            digitalWrite(dirPin, LOW);
+            digitalWrite(dirPin, !direction);
 
             // do a step
             digitalWrite(stepPin, HIGH);
