@@ -3,6 +3,7 @@
 
 #include "config.h"
 #include <Arduino.h>
+#include "LCD.h"
 
 class HotEnd {
 
@@ -13,7 +14,7 @@ public:
 
     void setTemperature(float temp);
 
-    void update();
+    void update(LCD &lcd);
 
 private:
     float targetTemperature = 0;

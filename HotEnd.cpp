@@ -2,7 +2,7 @@
 #include "HotEnd.h"
 
 HotEnd::HotEnd() {
-    memset(values,0,sizeof(values));
+    memset(values, 0, sizeof(values));
     pinMode(FAN_PIN, OUTPUT);
     digitalWrite(FAN_PIN, HIGH);
 }
@@ -19,8 +19,16 @@ void HotEnd::setTemperature(float temp) {
     targetTemperature = temp;
 }
 
-void HotEnd::update() {
+void HotEnd::update(LCD &lcd) {
     currentTemp = getTemperature();
+
+    // print temperature on lcd
+    lcd.print(0, 1, String(currentTemp));
+
+    if(currentTemp < MIN_TEMP || currentTemp > MAX_TEMP) {
+        analogWrite(HOT_END_PIN, 0);
+        return;
+    }
 
     // log error over time
     if(millis() - lastProbe >= 250) {

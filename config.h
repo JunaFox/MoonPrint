@@ -5,6 +5,10 @@
 #ifndef MOONPRINT_CONFIG_H
 #define MOONPRINT_CONFIG_H
 
+//Max stepper motor speed
+#define MAX_STEPPER_SPEED 500
+#define MAX_STEPPER_SPEED_Z 2000
+
 //Stepper Motor X axis
 #define STEP_PIN_X 25
 #define DIR_PIN_X 23
@@ -52,9 +56,6 @@
 #define MIN_PIN_E 0
 #define MAX_PIN_E 0
 
-//How many lines get saved
-#define GCODE_LINE_COUNT 10
-
 //NTC Pin
 #define NTC_PIN 8
 #define RESISTOR 4700
@@ -62,6 +63,8 @@
 //Hot end
 #define HOT_END_PIN 2
 #define FAN_PIN 3
+#define MAX_TEMP 250
+#define MIN_TEMP 0
 #define DKp 18
 #define DKi 0.2
 #define DKd 40

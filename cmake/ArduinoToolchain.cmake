@@ -82,6 +82,8 @@ else()
     message(FATAL_ERROR "Could not find Arduino SDK (set ARDUINO_SDK_PATH)!")
 endif()
 
+list(APPEND CMAKE_SYSTEM_PREFIX_PATH ${ARDUINO_SDK_PATH}/libraries/LiquidCrystal/src/)
+
 set(ARDUINO_CPUMENU)
 if(ARDUINO_CPU)
     set(ARDUINO_CPUMENU ".menu.cpu.${ARDUINO_CPU}")
