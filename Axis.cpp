@@ -17,6 +17,10 @@ void Axis::goToPos(float pos, float speed) {
     stepSpeed = speed;
 }
 
+void Axis::setCurrentPos(float pos) {
+    isPos = int(pos * stepsPerMm);
+}
+
 bool Axis::move() {
     // step when last step is done
     if(micros() - timeLastStep >= stepSpeed) {

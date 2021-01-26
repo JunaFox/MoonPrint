@@ -2,13 +2,18 @@
 #define MOONPRINT_GCODE_H
 
 #include <Arduino.h>
+#include "Axis.h"
 
 struct GcodeCommand {
-    float x;
-    float y;
-    float z;
-    float e;
-    int temp;
+    float x = 0;
+    bool xSetCurrentPos = false;
+    float y = 0;
+    bool ySetCurrentPos = false;
+    float z = 0;
+    bool zSetCurrentPos = false;
+    float e = 0;
+    bool eSetCurrentPos = false;
+    int temp = 0;
 };
 
 class Gcode {

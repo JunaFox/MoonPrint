@@ -35,8 +35,12 @@ void MoonPrint::run() {
     bool Y = y.move();
     bool Z = z.move();
     bool E = e.move();
-    bool Temp = hotEnd.update(lcd);
+    bool Temp = true;
+    if(newGcC.temp != 0)
+        Temp = hotEnd.update(lcd);
+
     if(X && Y && Z && E && Temp) {
+
         // Calculate speed of axes
 
         // Calculate distances
@@ -50,6 +54,31 @@ void MoonPrint::run() {
         maxMove = max(maxMove, distanceY);
         maxMove = max(maxMove, distanceZ);
         maxMove = max(maxMove, distanceE);
+
+        // G92
+        {
+            if(newGcC.eSetCurrentPos) {
+                newGcC.eSetCurrentPos = false;
+                e.setCurrentPos(newGcC.e);
+                e.goToPos(newGcC.e, 10000);
+                Serial.print(newGcC.e);
+            } else if(newGcC.xSetCurrentPos) {
+                newGcC.xSetCurrentPos = false;
+                x.setCurrentPos(newGcC.x);
+                x.goToPos(newGcC.x, 10000);
+                Serial.print(newGcC.x);
+            } else if(newGcC.ySetCurrentPos) {
+                newGcC.ySetCurrentPos = false;
+                y.setCurrentPos(newGcC.y);
+                y.goToPos(newGcC.y, 10000);
+                Serial.print(newGcC.y);
+            } else if(newGcC.zSetCurrentPos) {
+                newGcC.zSetCurrentPos = false;
+                z.setCurrentPos(newGcC.x);
+                z.goToPos(newGcC.z, 10000);
+                Serial.print(newGcC.z);
+            }
+        }
 
         // check if z axis is moving and change speed because z axis can't move as fast
         if(distanceZ != 0) {

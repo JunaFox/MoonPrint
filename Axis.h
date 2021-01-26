@@ -18,6 +18,8 @@ public:
      */
     void goToPos(float pos, float speed);
 
+    void setCurrentPos(float pos);
+
     /**
      * Executes the movement.
      */
