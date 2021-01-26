@@ -1,7 +1,7 @@
 
 #include "HotEnd.h"
 
-HotEnd::HotEnd() {
+HotEnd::HotEnd() : values() {
     memset(values, 0, sizeof(values));
     pinMode(FAN_PIN, OUTPUT);
     digitalWrite(FAN_PIN, HIGH);
@@ -19,7 +19,7 @@ void HotEnd::setTemperature(float temp) {
     targetTemperature = temp;
 }
 
-void HotEnd::update(LCD &lcd) {
+bool HotEnd::update(LCD &lcd) {
     currentTemp = getTemperature();
 
     // print temperature on lcd
@@ -27,7 +27,7 @@ void HotEnd::update(LCD &lcd) {
 
     if(currentTemp < MIN_TEMP || currentTemp > MAX_TEMP) {
         analogWrite(HOT_END_PIN, 0);
-        return;
+        return false;
     }
 
     // log error over time
@@ -46,7 +46,6 @@ void HotEnd::update(LCD &lcd) {
     // Calculate analog output
     mv = values[sizeof(values) / sizeof(float) - 1] * Kp + arraySum * Ki +
          ((values[0] - values[4])) * Kd + b;
-    //Serial.println(String(mv) + " | " + String(currentTemp));
 
     if (mv < 0) {
         mv = 0;
@@ -56,4 +55,10 @@ void HotEnd::update(LCD &lcd) {
 
     analogWrite(HOT_END_PIN, int(mv));
 
+    if(targetTemperature + targetTemperature * 0.15 > arraySum / (float(sizeof(values)) / sizeof(float)) &&
+       targetTemperature - targetTemperature * 0.15 < arraySum / (float(sizeof(values)) / sizeof(float))) {
+        return true;
+    }
+
+    return false;
 }

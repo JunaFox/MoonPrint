@@ -11,9 +11,6 @@ void MoonPrint::setup() {
 
 void MoonPrint::run() {
 
-    hotEnd.update(lcd);
-    //hotEnd.setTemperature(100);
-
     // if no next line is available
     if(gcC.x == newGcC.x && gcC.y == newGcC.y && gcC.z == newGcC.z && gcC.e == newGcC.e &&
        gcC.temp == newGcC.temp) {
@@ -38,7 +35,8 @@ void MoonPrint::run() {
     bool Y = y.move();
     bool Z = z.move();
     bool E = e.move();
-    if(X && Y && Z && E) {
+    bool Temp = hotEnd.update(lcd);
+    if(X && Y && Z && E && Temp) {
         // Calculate speed of axes
 
         // Calculate distances
@@ -57,17 +55,20 @@ void MoonPrint::run() {
         if(distanceZ != 0) {
             gcC = newGcC;
             // Tell axes what to do
-            x.goToPos(gcC.x, maxMove / distanceX * MAX_STEPPER_SPEED_Z);
-            y.goToPos(gcC.y, maxMove / distanceY * MAX_STEPPER_SPEED_Z);
-            z.goToPos(gcC.z, maxMove / distanceZ * MAX_STEPPER_SPEED_Z);
-            e.goToPos(gcC.e, maxMove / distanceE * MAX_STEPPER_SPEED_Z);
+            x.goToPos(gcC.x, float(maxMove / distanceX * MAX_STEPPER_SPEED_Z));
+            y.goToPos(gcC.y, float(maxMove / distanceY * MAX_STEPPER_SPEED_Z));
+            z.goToPos(gcC.z, float(maxMove / distanceZ * MAX_STEPPER_SPEED_Z));
+            e.goToPos(gcC.e, float(maxMove / distanceE * MAX_STEPPER_SPEED_Z));
         } else {
             gcC = newGcC;
             // Tell axes what to do
-            x.goToPos(gcC.x, maxMove / distanceX * MAX_STEPPER_SPEED);
-            y.goToPos(gcC.y, maxMove / distanceY * MAX_STEPPER_SPEED);
-            z.goToPos(gcC.z, maxMove / distanceZ * MAX_STEPPER_SPEED_Z);
-            e.goToPos(gcC.e, maxMove / distanceE * MAX_STEPPER_SPEED);
+            x.goToPos(gcC.x, float(maxMove / distanceX * MAX_STEPPER_SPEED));
+            y.goToPos(gcC.y, float(maxMove / distanceY * MAX_STEPPER_SPEED));
+            z.goToPos(gcC.z, float(maxMove / distanceZ * MAX_STEPPER_SPEED_Z));
+            e.goToPos(gcC.e, float(maxMove / distanceE * MAX_STEPPER_SPEED));
         }
+
+        // update temperature target
+        hotEnd.setTemperature(float(gcC.temp));
     }
 }

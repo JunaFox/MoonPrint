@@ -10,11 +10,21 @@ class HotEnd {
 public:
     HotEnd();
 
-    float getTemperature();
+    static float getTemperature();
 
+    /**
+     * Set target temperature to specified temperature.
+     * @param temp Specified temperature.
+     */
     void setTemperature(float temp);
 
-    void update(LCD &lcd);
+    /**
+     * Tries to get to target temperature via PID controller.
+     * Shuts down heating when temperature is below MIN_TEMP or over MAX_TEMP.
+     * @param lcd LCD where the current temperature will be printed.
+     * @return True when the temperature average for the last 6,25 seconds is in 15% of target temperature.
+     */
+    bool update(LCD &lcd);
 
 private:
     float targetTemperature = 0;
