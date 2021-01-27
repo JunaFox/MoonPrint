@@ -23,7 +23,7 @@ public:
 
     /**
      * Takes a G-code line and processes it.
-     * First 4 for Command. Example ("G1   X123.123 Y134.132 Z123.163 E123.183")
+     * First 4 for Command. Example ("G1    X123.123 Y134.132 Z123.163 E123.183")
      * @param G-code line.
      * @return Position and temperature.
      */

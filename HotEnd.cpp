@@ -55,8 +55,8 @@ bool HotEnd::update(LCD &lcd) {
 
     analogWrite(HOT_END_PIN, int(mv));
 
-    if(targetTemperature + targetTemperature * 0.15 > arraySum / (float(sizeof(values)) / sizeof(float)) &&
-       targetTemperature - targetTemperature * 0.15 < arraySum / (float(sizeof(values)) / sizeof(float))) {
+    if(targetTemperature * 1.05 > targetTemperature - arraySum / (float(sizeof(values)) / sizeof(float)) &&
+       targetTemperature * 0.95 < targetTemperature - arraySum / (float(sizeof(values)) / sizeof(float))) {
         return true;
     }
 

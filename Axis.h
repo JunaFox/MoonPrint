@@ -36,7 +36,7 @@ private:
     const short int stepPin, dirPin, enablePin, minPin, maxPin;
 
     //
-    unsigned int isPos = 0, solPos = 0;
+    long int isPos = 0, solPos = 0;
     float stepSpeed = 5000;
     unsigned long int timeLastStep = 0;
     bool direction;
